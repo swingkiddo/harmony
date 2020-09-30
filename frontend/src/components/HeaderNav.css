@@ -1,0 +1,16 @@
+ul li a {
+    text-decoration: none;
+    color: red;
+    font-size: 120%;
+}
+
+.header-nav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.nav-item {
+    padding: 0 10px;
+    list-style: none;
+}
