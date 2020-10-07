@@ -25,7 +25,7 @@ class ComposerView(APIView):
         previous_page = 1
         composers = Composer.objects.all()
         page = request.GET.get("page", 1)
-        paginator = Paginator(composers, 10)
+        paginator = Paginator(composers, 20)
         try:
             data = paginator.page(page)
         except PageNotAnInteger:
@@ -34,16 +34,18 @@ class ComposerView(APIView):
             data = paginator.page(paginator.num_pages)
 
         serializer = ComposerSerializer(data, context={'request': request}, many=True)
+        serializer_for_filters = ComposerSerializer(composers, context={'request': request}, many=True)
         if data.has_next():
             next_page = data.next_page_number()
         if data.has_previous():
             previous_page = data.previous_page_number()
         
         return Response({"data": serializer.data,
+                        "fullData": serializer_for_filters.data,
                          "count": paginator.count, 
                          "numpages": paginator.num_pages, 
-                         "nextlink": "/api/composers/?page" + str(next_page),
-                         "prevlink": "/api/composers/?page" + str(previous_page)})
+                         "nextlink": "/api/composers/?page=" + str(next_page),
+                         "prevlink": "/api/composers/?page=" + str(previous_page)})
 
     def post(self, request, *args, **kwargs):
         serializer = ComposerSerializer(data=request.data)

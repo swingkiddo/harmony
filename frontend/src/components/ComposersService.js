@@ -1,12 +1,12 @@
 import axios from 'axios';
-const API_URL = "http://localhost:8000/api";
+const API_URL = "http://localhost:8000";
 
 export default class ComposersService {
 
     constructor() {}
 
     getComposers() {
-        const url = API_URL + "/composers/";
+        const url = API_URL + "/api/composers/";
         return axios.get(url).then(response => response.data);
     }
 
@@ -16,22 +16,22 @@ export default class ComposersService {
     }
 
     getComposer(pk) {
-        const url = API_URL + "/composers/" + pk;
+        const url = API_URL + "/api/composers/" + pk;
         return axios.get(url).then(response => response.data);
     }
 
     deleteComposer(composer) {
-        const url = API_URL + "/composers/" + composer.pk;
+        const url = API_URL + "/api/composers/" + composer.pk;
         return axios.delete(url);
     }
 
     createComposer(composer) {
-        const url = API_URL + "/composers/";
+        const url = API_URL + "/api/composers/";
         return axios.post(url, composer, {headers: {"content-type": "multipart/form-data"}});
     }
 
     updateComposer(composer, pk) {
-        const url = API_URL + "/composers/" + pk;
+        const url = API_URL + "/api/composers/" + pk;
         return axios.put(url, composer, {headers: {"content-type": "multipart/form-data"}});
     }
 }

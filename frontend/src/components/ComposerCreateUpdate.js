@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ComposersService from "./ComposersService";
+import "./Composers.css";
 
 const composersService = new ComposersService();
 
@@ -12,15 +13,20 @@ class ComposerCreateUpdate extends Component {
         this.state = {
             photo: null
         }
+
+        this.nameInput = React.createRef();
+        this.eraInput = React.createRef();
+        this.articleInput = React.createRef();
+        this.photoInput = React.createRef();
     }
 
     componentDidMount() {
         const { match: { params } } = this.props;
         if (params && params.pk) {
             composersService.getComposer(params.pk).then((c) => {
-                this.refs.name.value = c.name;
-                this.refs.era.value = c.era;
-                this.refs.article.value = c.article;
+                this.nameInput.current.value = c.name;
+                this.eraInput.current.value = c.era;
+                this.articleInput.current.value = c.article;            
             });
         }
     }
@@ -33,11 +39,11 @@ class ComposerCreateUpdate extends Component {
 
     createFormData(pk) {
         let formData = new FormData();
-        if (pk !== undefined) { formData.append('pk', pk); }
+        if (pk !== undefined) { formData.append('pk', pk) }
         formData.append('photo', this.state.photo, this.state.photo.name);
-        formData.append('name', this.refs.name.value);
-        formData.append('era', this.refs.era.value);
-        formData.append('article', this.refs.article.value);
+        formData.append('name', this.nameInput.current.value);
+        formData.append('era', this.eraInput.current.value);
+        formData.append('article', this.articleInput.current.value);
         return formData;
     }
 
@@ -51,14 +57,14 @@ class ComposerCreateUpdate extends Component {
 
     handleUpdate(pk) {
         composersService.updateComposer(this.createFormData(pk), pk).then((result) => {
-                alert("Customer updated!");
+                alert("Composer updated!");
             }).catch(() => {
                 alert("There was an error! Please re-check your form");
             });
     }
 
     handleSubmit(event) {
-        const {match: { params} } = this.props;
+        const {match: { params } } = this.props;
         if (params && params.pk) {
             this.handleUpdate(params.pk);
         } else {
@@ -73,16 +79,22 @@ class ComposerCreateUpdate extends Component {
                 <div className="container">
                     <div className="form-group">
                         <label>Name:</label>
-                        <input className="form-control" type="text" ref="name" />
+                        <input className="form-control" type="text" ref={this.nameInput} />
 
                         <label>Era:</label>
-                        <input className="form-control" type="text" ref="era" />
+                        <select className="form-control" ref={this.eraInput}>
+                            <option value='' selected>Выберите эпоху</option>
+                            <option value="Барокко">Барокко</option>
+                            <option value="Классицизм">Классицизм</option>
+                            <option value="Романтизм">Романтизм</option>
+                            <option value="Импрессионизм">Импрессионизм</option>
+                        </select>
 
                         <label>Article:</label>
-                        <textarea className="form-control" type="text" ref="article" rows="10" />
+                        <textarea className="form-control" type="text" ref={this.articleInput} rows="10" />
 
                         <label>Photo:</label>
-                        <input className="form-control" type="file" ref="photo" style={{marginBottom: 15}} onChange={this.handleImageChange}/>
+                        <input className="form-control" type="file" ref={this.photoInput} style={{marginBottom: 15}} onChange={this.handleImageChange}/>
 
                         <input className="btn btn-primary" type="submit" value="Submit" />
                     </div>
