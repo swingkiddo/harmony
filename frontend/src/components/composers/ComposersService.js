@@ -3,8 +3,6 @@ const API_URL = "http://localhost:8000";
 
 export default class ComposersService {
 
-    constructor() {}
-
     getComposers() {
         const url = API_URL + "/api/composers/";
         return axios.get(url).then(response => response.data);

@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { BrowserRouter} from 'react-router-dom';
 import { Route, Link } from "react-router-dom"
-import ComposersList from "./components/ComposersList";
-import ComposerCreateUpdate from "./components/ComposerCreateUpdate";
-import ComposerDetail from './components/ComposerDetail';
+import ComposersList from "./components/composers/ComposersList";
+import ComposerCreateUpdate from "./components/composers/ComposerCreateUpdate";
+import ComposerDetail from './components/composers/ComposerDetail';
+import TextbooksList from './components/TextbooksList';
+
 import './App.css';
 import "./hover.css";
 
@@ -25,7 +27,7 @@ const BaseLayout = () => (
           <div className="navbar-nav">
             <a className="nav-item nav-link hvr-back-pulse" href="/composers">Музыкальная литература</a>
             <a className="nav-item nav-link hvr-back-pulse" href="/harmony">Гармония</a>
-
+            <a className="nav-item nav-link hvr-back-pulse" href="/textbooks">Материалы</a>
           </div>
         </div>
       </div>
@@ -35,6 +37,7 @@ const BaseLayout = () => (
       <Route path="/composers/:pk" exact component={ComposerDetail} />
       <Route path="/composers/create" exact component={ComposerCreateUpdate} />
       <Route path="/composers/update/:pk" exact component={ComposerCreateUpdate} />
+      <Route path="/textbooks" exact component={TextbooksList} />
     </div>
     <footer id="footer">
 

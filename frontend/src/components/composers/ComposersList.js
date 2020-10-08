@@ -74,7 +74,7 @@ class ComposersList extends Component {
         
         return (
             <div className="container composers-main">
-                <input type="text" onChange={this.handleSearchChange}></input>
+                <input type="text" onChange={this.handleSearchChange} style={{marginRight:10}}></input>
                 <select onChange={this.handleEraChange}>
                     <option value='' selected>Выберите эпоху</option>
                     <option value="Барокко">Барокко</option>
@@ -83,11 +83,12 @@ class ComposersList extends Component {
                     <option value="Импрессионизм">Импрессионизм</option>
                 </select>
 
-                {filteredData 
+                {
+                    filteredData 
                     ?   <Composers composers={filteredData} />
-                    :   <Composers composers={this.state.composers} />}
-
-                <button className="btn btn-primary hvr-pulse" onClick={this.nextPage}>Next</button>
+                    :   <Composers composers={this.state.composers} />
+                }
+                
             </div>
         );
     }

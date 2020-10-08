@@ -14,6 +14,7 @@ urlpatterns = [
     #path('api/', include(router.urls)),
    path('api/composers/', views.ComposerView.as_view()),
    re_path(r'^api/composers/(?P<pk>[0-9]+)$', views.composers_detail),
+   path('api/textbooks/', views.TextbookView.as_view()),
 ]
 
 if settings.DEBUG:
