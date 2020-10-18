@@ -1,0 +1,50 @@
+.composer-detail {
+    height: 90vh;
+    display: grid;
+    grid-template-rows: 3fr 7fr;
+}
+
+.composer-detail-hero {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    background-color: rgba(0, 0, 0, .7);
+}
+
+.composer-detail-photo {
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: 50%;
+    overflow: hidden;
+    position: relative;
+}
+
+.composer-detail-hero-container {
+    grid-row-start: 2/3;
+    color: #fff;
+    height: 100%;
+    display: grid;
+    grid-template-rows: 2fr 1fr 1fr;
+}
+
+.composer-detail-hero-container h1 {
+
+}
+
+#composer-name {
+    font-family: "Nunito", sans-serif;
+    font-weight: bold;
+    font-size: 2em;
+    display: flex;
+    align-items: flex-end;
+}
+
+#composer-date, 
+#composer-nationality {
+    font-family: "Nunito", sans-serif;
+    font-size: 1.8em;
+}
+
+#composer-date {
+    display: flex;
+    align-self: flex-end;
+}

@@ -11,20 +11,16 @@ class ComposersList extends Component {
         super(props);
         this.state = {
             composers: [],
-            fullData: [],
-            nextPageURL: '',
             searchValue: '',
             eraValue: '',
-            activePage: 1,
-            totalItems: null
+
         }
-        this.nextPage = this.nextPage.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
     }
 
     componentDidMount() {
         composersService.getComposers().then((result) => {
-            this.setState({ composers: result.data, nextPageURL: result.nextlink, fullData: result.fullData, totalItems: result.count })
+            this.setState({ composers: result.data})
         });
     }
 
@@ -36,6 +32,14 @@ class ComposersList extends Component {
         this.setState({ eraValue: e.target.value })
     }
 
+    sort = () => {
+        console.log("hello");
+        let sortedComposers = this.state.composers.sort(function(a, b) {
+            if (a.name > b.name) return 1
+            else if (a.name < b.name) return -1
+        })
+        this.setState({composers: sortedComposers})
+    }
 
     handleDelete(e, pk) {
         composersService.deleteComposer({ pk: pk }).then(() => {
@@ -46,13 +50,6 @@ class ComposersList extends Component {
         });
     }
 
-    nextPage() {
-        composersService.getComposersByURL(this.state.nextPageURL).then((result) => {
-            this.setState({ composers: result.data, nextPageURL: result.nextlink })
-        });
-        console.log("check");
-    }
-
     eraFilter = (data) => data.filter(c => c.era === this.state.eraValue)
 
     searchFilter = (data) => data.filter(c => c.name.toLowerCase().includes(this.state.searchValue))
@@ -61,35 +58,61 @@ class ComposersList extends Component {
         let filteredData;
 
         if (this.state.eraValue && !filteredData) {
-            filteredData = this.eraFilter(this.state.fullData)
+            filteredData = this.eraFilter(this.state.composers)
         } else if (this.state.eraValue && filteredData) {
             filteredData = this.eraFilter(filteredData)
         }
 
         if (this.state.searchValue && !filteredData) {
-            filteredData = this.searchFilter(this.state.fullData)
+            filteredData = this.searchFilter(this.state.composers)
         } else if (this.state.searchValue && filteredData) {
             filteredData = this.searchFilter(filteredData)
         }
         
         return (
-            <div className="container composers-main">
-                <input type="text" onChange={this.handleSearchChange} style={{marginRight:10}}></input>
-                <select onChange={this.handleEraChange}>
-                    <option value='' selected>Выберите эпоху</option>
-                    <option value="Барокко">Барокко</option>
-                    <option value="Классицизм">Классицизм</option>
-                    <option value="Романтизм">Романтизм</option>
-                    <option value="Импрессионизм">Импрессионизм</option>
-                </select>
-
+    /*        <div className="container composers-main">
+                <div className="filters">
+                    <input type="text" onChange={this.handleSearchChange} style={{marginRight:10}}></input>
+                    <select onChange={this.handleEraChange}>
+                        <option value='' selected>Выберите эпоху</option>
+                        <option value="Барокко">Барокко</option>
+                        <option value="Классицизм">Классицизм</option>
+                        <option value="Романтизм">Романтизм</option>
+                        <option value="Импрессионизм">Импрессионизм</option>
+                    </select>
+                </div>
                 {
                     filteredData 
                     ?   <Composers composers={filteredData} />
                     :   <Composers composers={this.state.composers} />
                 }
-                
-            </div>
+            
+            </div> */
+            <div className="composers-wrapper">
+                <div className="composers-filters">
+                    <div className="composers-filters-name">
+                        <input type="text" onChange={this.handleSearchChange}></input>
+                    </div>
+                    <div className="composers-filters-era">
+                        <select onChange={this.handleEraChange}>
+                            <option value='' selected>Выберите эпоху</option>
+                            <option value="Барокко">Барокко</option>
+                            <option value="Классицизм">Классицизм</option>
+                            <option value="Романтизм">Романтизм</option>
+                            <option value="Импрессионизм">Импрессионизм</option>
+                        </select>
+                    </div>
+                    <div className="composers-filters-sort">
+                        <button onClick={this.sort}>Sort</button>
+                    </div>
+                    
+                </div>
+                {
+                    filteredData 
+                    ?   <Composers composers={filteredData} />
+                    :   <Composers composers={this.state.composers} />
+                }
+                </div>
         );
     }
 }

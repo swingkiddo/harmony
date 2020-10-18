@@ -10,27 +10,33 @@ import './App.css';
 import "./hover.css";
 
 const BaseLayout = () => (
-  <div className="container-fluid page">
-    <nav className="nav navbar navbar-expand-lg navbar-light bg-light">
-      <div className="container">
-        <a className="navbar-brand" href="/">Music Theory Website</a>
-        <button className="navbar-toggler" 
-                  type="button" 
-                  data-toggle="collapse" 
-                  data-target="#navbarNavAltMarkup" 
-                  aria-controls="navbarNavAltMarkup" 
-                  aria-expanded="false" 
-                  aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div className="navbar-nav">
-            <a className="nav-item nav-link hvr-back-pulse" href="/composers">Музыкальная литература</a>
-            <a className="nav-item nav-link hvr-back-pulse" href="/harmony">Гармония</a>
-            <a className="nav-item nav-link hvr-back-pulse" href="/textbooks">Материалы</a>
-          </div>
-        </div>
-      </div>
+  <div className="wrapper">
+    <nav className="navbar">
+      <a className="logo" href="/">
+          <div></div>
+          <span>Harmony</span>
+
+      </a>
+      <ul className="menu">
+        <li className="menu-item">
+          <a href="/composers">
+            <div></div>
+            <span>Музыкальная литература</span>
+          </a>
+        </li>
+        <li className="menu-item">
+          <a href="/harmony">
+            <div></div>
+            <span>Гармония</span>
+          </a>
+        </li>
+        <li className="menu-item">
+          <a href="/textbooks">
+            <div></div>
+            <span>Учебники</span>
+          </a>
+        </li>
+      </ul>
     </nav>
     <div className="content">
       <Route path="/composers" exact component={ComposersList} />
